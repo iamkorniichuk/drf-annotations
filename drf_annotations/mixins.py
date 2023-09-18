@@ -23,3 +23,8 @@ class SerializeAnnotationsMixin(ModelSerializer):
         if not hasattr(self, "annotations"):
             self.annotations = self.get_queryset()._query.annotations
         return self.annotations
+
+    def create(self, validated_data):
+        pk = super().create(validated_data).pk
+        self.instance = self.get_queryset().get(pk=pk)
+        return self.instance
