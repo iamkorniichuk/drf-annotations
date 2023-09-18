@@ -1,15 +1,16 @@
 from rest_framework import serializers
+from drf_annotations.mixins import SerializeAnnotationsMixin
 
 from .models import Author
 
 
-class AuthorSerializer(serializers.ModelSerializer):
+class AuthorSerializer(SerializeAnnotationsMixin, serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = "__all__"
 
 
-class ContainsASerializer(serializers.ModelSerializer):
+class ContainsASerializer(SerializeAnnotationsMixin, serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = "__all__"
