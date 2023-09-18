@@ -2,6 +2,8 @@ from rest_framework.serializers import ModelSerializer
 
 
 class SerializeAnnotationsMixin(ModelSerializer):
+    queryset = None
+
     def get_fields(self):
         fields = super().get_fields()
         for name, annotation in self.get_annotations().items():
@@ -14,7 +16,10 @@ class SerializeAnnotationsMixin(ModelSerializer):
         ]
         return serializer_class(required=False, read_only=True)
 
+    def get_queryset(self):
+        return self.queryset or self.Meta.model._default_manager.all()
+
     def get_annotations(self):
         if not hasattr(self, "annotations"):
-            self.annotations = self.Meta.model._default_manager.all()._query.annotations
+            self.annotations = self.get_queryset()._query.annotations
         return self.annotations
