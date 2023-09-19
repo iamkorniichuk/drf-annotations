@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from drf_annotations.mixins import SerializeAnnotationsMixin
+from src.drf_annotations.mixins import SerializeAnnotationsMixin
 
 from .models import Author
 
